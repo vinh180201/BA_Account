@@ -1,0 +1,12 @@
+.profile {
+    border-style: outset;
+}
+.headerbox {
+    height: auto;
+    width: 100%;
+    display: flex;
+    background-color: powderblue;
+}
+.info {
+    margin-top:50px;
+}
