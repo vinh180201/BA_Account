@@ -10,7 +10,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="dashboard.php">My Profile</a></li>
+        <li class="active"><a href="#">My Profile</a></li>
         <li><a href="edit">Edit profile</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
