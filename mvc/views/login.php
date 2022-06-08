@@ -16,6 +16,10 @@
 	body{
   		background-color: skyblue;
   	}
+	#msg {
+		background-color: yellow;
+	}
+	
   	</style>
 	<base href="http://localhost/BA_account/">
 </head>
@@ -36,7 +40,7 @@
 
 				}
 				else {
-					echo "Đăng nhập thất bại";
+					echo "<h5 id='msg'>" . "Đăng nhập thất bại" . "</h5>";
 				}
 			}
 			?>
@@ -46,7 +50,7 @@
 			</div>
 			<div class="form-group">
 				<label>Password:</label>
-				<input type="password" name="password" class="form-control" value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>" >
+				<input type="password" name="password" class="form-control" >
 			</div>
 			<div class="form-group">
 			<label for="login-remember"><input type="checkbox" id="remember" name="remember">Remember Me</label>
@@ -54,8 +58,10 @@
 		</div>
 		<a href="http://localhost/BA_account/login/forgot_password" > Forgot password?</a>
 		</br>
-		<button type="submit" class="btn btn-primary" formaction="Login/Signup">Sign up</button>
 		<button type="submit" name="submit_login" class="btn btn-primary">Login</button>
+
+		<button type="submit" class="btn btn-primary" formaction="Login/Signup">Sign up</button>
+		
 			
 		</form>
 	</div>

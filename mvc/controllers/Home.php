@@ -44,7 +44,6 @@ class Home extends Controller{
                     // set cookie
                     if (isset($_POST["remember"])) {
                         setcookie("username","$username",time()+3600,"/","",0,0);
-                        setcookie("password","$password",time()+3600,"/","",0,0);
                     }
 
                     self::view("home", [
@@ -62,6 +61,11 @@ class Home extends Controller{
                         "result" => $result
                     ]);
                 }
+            }
+            else {
+                self::view("login", [
+                    "result" => $result
+                ]);
             }
         }
     }
