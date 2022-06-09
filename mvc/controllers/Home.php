@@ -22,7 +22,6 @@ class Home extends Controller{
                 ]);
             }
             // them user vao session
-            // $session = $this->session->addSession($username);
 
             $user_data = $this->user->getUser($username);
             $account_data = $this->account->getAccount($username);
@@ -32,6 +31,10 @@ class Home extends Controller{
                     $id = $ad["id"];
                     $password = $ad["password"];
                 }
+                $decryption_key = "itsasecret";
+                $decryption_iv = "111555888abcdefg";
+
+                $decrypt_pass = openssl_decrypt ($password, "AES-128-CTR", $decryption_key, 0, $decryption_iv);
                 while ($ud = mysqli_fetch_array($user_data)) {
                     $hoten = $ud["hoten"];
                     $ngaysinh = $ud["ngaysinh"];
@@ -40,7 +43,7 @@ class Home extends Controller{
                     $about_me = $ud["about_me"];
                 }
                 // khong dung duoc strcmp()
-                if ($password_input == $password) {
+                if ($password_input == $decrypt_pass) {
                     // set cookie
                     if (isset($_POST["remember"])) {
                         setcookie("username","$username",time()+3600,"/","",0,0);

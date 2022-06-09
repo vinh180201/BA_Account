@@ -13,6 +13,8 @@ class User extends DB{
         $data = $this->getUser($username);
         $account = "INSERT INTO user_profile (`id`, `username`, `hoten`, `email`, `sdt`, `ngaysinh`) VALUES (NULL, '$username', '$hoten'
         , '$email', '$sdt', '$ngaysinh');";
+
+        mysqli_query($this->con, "ALTER TABLE user_profile AUTO_INCREMENT = 1");
         return mysqli_query($this->con, $account);
     }
 

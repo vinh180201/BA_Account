@@ -8,6 +8,8 @@ class Account extends DB{
     public function addAccount($username, $password) {
         $data = $this->getAccount($username);
         $account = "INSERT INTO `account` (`id`, `username`, `password`) VALUES (NULL, '$username', '$password');";
+
+        mysqli_query($this->con, "ALTER TABLE account AUTO_INCREMENT = 1");
         return mysqli_query($this->con, $account);
         
     }

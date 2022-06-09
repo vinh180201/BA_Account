@@ -28,8 +28,15 @@ class Login extends Controller{
                 ]);
             }
             else {
+                //ma hoa password
+                $encryption_key = "itsasecret";
+                $encryption_iv = "111555888abcdefg";
+
+                $encrypt_pass = openssl_encrypt($password_input, "AES-128-CTR",
+			    $encryption_key, 0, $encryption_iv);
+
                 // them account
-                $this->account->addAccount($username_input, $password_input);
+                $this->account->addAccount($username_input, $encrypt_pass);
                 $this->user->addUser($username_input, $hoten_input, $email_input, $sdt_input, $ngaysinh_input);
                 self::view("login", [
                     "alert" => "sign_up_success"
