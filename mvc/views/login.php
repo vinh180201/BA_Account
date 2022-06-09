@@ -18,6 +18,7 @@
   	}
 	#msg {
 		background-color: yellow;
+		display: inline-block;
 	}
 	
   	</style>

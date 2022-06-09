@@ -130,9 +130,30 @@ class Login extends Controller{
         }    
         
         if (isset($_POST["email"]) && isset($_POST["sdt"])) {
-            
             $email_input = $_POST["email"];
             $sdt_input = $_POST["sdt"];
+
+            if (!$this->validateEmail($email_input)) {
+                self::view("verify_user", [
+                    "id" => 5,
+                    "verify_user" => true,
+                    "verify_data" => false,
+                    "action" => "forgot_password",
+                    "msg" => "Wrong email or phone number"
+                ]);
+                exit();
+            }
+            if (!$this->validatePhone($sdt_input)) {
+                self::view("verify_user", [
+                    "id" => 5,
+                    "verify_user" => true,
+                    "verify_data" => false,
+                    "action" => "forgot_password",
+                    "msg" => "Wrong email or phone number"
+                ]);
+                exit();
+            }
+
             $user_data = $this->user->getUser($_SESSION["username"]);
 
             while ($ud = mysqli_fetch_array($user_data)) {
@@ -144,12 +165,16 @@ class Login extends Controller{
                 while ($ad = mysqli_fetch_array($account_data)) {
                     $password = $ad["password"];
                 }
+                $decryption_key = "itsasecret";
+                $decryption_iv = "111555888abcdefg";
+
+                $decrypt_pass = openssl_decrypt ($password, "AES-128-CTR", $decryption_key, 0, $decryption_iv);
 
                 self::view("verify_user", [
                     "id" => 4,
                     "verify_user" => true,
                     "verify_data" => true,
-                    "password" => $password,
+                    "password" => $decrypt_pass,
                     "action" => "forgot_password",
                     "msg" => NULL
                 ]);

@@ -17,6 +17,7 @@
   	}
 	#msg {
 		background-color: yellow;
+		display: inline-block;
 	}
   	</style>
 	<base href="http://localhost/BA_account/">
