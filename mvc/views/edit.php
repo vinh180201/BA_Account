@@ -20,9 +20,17 @@
             width:400px;
             height: auto;
         }
+        textarea {
+            resize: none;
+        }
     </style>    
 </head>
 <body>
+    <div id="header"></div>
+        <?php require_once('pages/header.php'); ?>
+    <div id="content"></div>
+        <?php require_once('pages/navbar.php'); ?>
+
 <div class="container bootstrap snippets bootdey">
     <h1 class="text-primary">Edit Profile</h1>
       <hr>
@@ -41,31 +49,31 @@
           <div class="form-group">
             <label class="col-lg-3 control-label">Name:</label>
             <div class="col-lg-8">
-              <input name="hoten" class="form-control" type="text">
+              <input name="hoten" class="form-control" type="text" value="<?php if(isset($_SESSION["hoten"])) { echo $_SESSION["hoten"]; } ?>">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Email:</label>
             <div class="col-lg-8">
-              <input name="email" class="form-control" type="text">
+              <input name="email" class="form-control" type="text" value="<?php if(isset($_SESSION["email"])) { echo $_SESSION["email"]; } ?>">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Phone:</label>
             <div class="col-lg-8">
-              <input name="sdt" class="form-control" type="text">
+              <input name="sdt" class="form-control" type="text" value="<?php if(isset($_SESSION["sdt"])) { echo $_SESSION["sdt"]; } ?>">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Birth:</label>
             <div class="col-lg-8">
-              <input name="ngaysinh" class="form-control" type="date">
+              <input name="ngaysinh" class="form-control" type="date" value="<?php if(isset($_SESSION["ngaysinh"])) { echo $_SESSION["ngaysinh"]; } ?>">
             </div>
           </div>  
             <div class="form-group">
             <label class="col-lg-3 control-label">About me:</label>
             <div class="col-lg-8">
-              <input name="about_me" class="form-control" type="text">
+              <textarea name="about_me" class="form-control" rows = "5" type="text" ><?php if(isset($_SESSION["about_me"])) { echo $_SESSION["about_me"]; } ?></textarea>
             </div>
           </div>
             <div class="col-lg-8">
@@ -80,5 +88,8 @@
   </div>
 </div>
 <hr>
+
+<div id="footer"></div>
+        <?php require_once('pages/footer.php'); ?>
 </body>
 </html>

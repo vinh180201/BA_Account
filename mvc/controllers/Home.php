@@ -9,16 +9,26 @@ class Home extends Controller{
         $this->account = self::model("Account");
     }
 
+    public function auto() {
+        // quay lai home bang cach luu bien vao session
+        self::view("home", [
+            "username" => $_SESSION["username"],
+            "hoten" => $_SESSION["hoten"],
+            "ngaysinh" => $_SESSION["ngaysinh"],
+            "email" => $_SESSION["email"],
+            "sdt" => $_SESSION["sdt"],
+            "about_me" => $_SESSION["about_me"],
+            "result" => $_SESSION["result"]
+        ]);
+    }
+
     public function login() {
-        $result = false;
         if(isset($_POST["submit_login"])) {
             $username = $_POST["username"];
-            $_SESSION["username"] = $username;
-
             $password_input = $_POST["password"];
             if (empty($_POST["username"]) || empty($_POST["password"])) {
                 self::view("login",[
-                    "result" => $result
+                    "result" => false
                 ]);
             }
             // them user vao session
@@ -48,6 +58,14 @@ class Home extends Controller{
                     if (isset($_POST["remember"])) {
                         setcookie("username","$username",time()+3600,"/","",0,0);
                     }
+                    // tao bien session
+                    $_SESSION["username"] = $username;
+                    $_SESSION["hoten"] = $hoten;
+                    $_SESSION["ngaysinh"] = $ngaysinh;
+                    $_SESSION["email"] = $email;
+                    $_SESSION["sdt"] = $sdt;
+                    $_SESSION["about_me"] = $about_me;
+                    $_SESSION["result"] = true;
 
                     self::view("home", [
                         "username" => $username,
@@ -56,18 +74,18 @@ class Home extends Controller{
                         "email" => $email,
                         "sdt" => $sdt,
                         "about_me" => $about_me,
-                        "result" => $this->$result=true
+                        "result" => true
                     ]);
                 }
                 else {
                     self::view("login", [
-                        "result" => $result
+                        "result" => false
                     ]);
                 }
             }
             else {
                 self::view("login", [
-                    "result" => $result
+                    "result" => false
                 ]);
             }
         }
@@ -82,21 +100,30 @@ class Home extends Controller{
             $ngaysinh_input = $_POST["ngaysinh"];
             $about_me_input = $_POST["about_me"];
 
-            if ($hoten_input != NULL) {
-                $a = $this->user->editUser($username, $hoten_input, "hoten");
-            }
-            if ($email_input != NULL) {
-                $b = $this->user->editUser($username, $email_input, "email");
-            }
-            if ($sdt_input != NULL) {
-                $c = $this->user->editUser($username, $sdt_input, "sdt");
-            }
-            if ($ngaysinh_input != NULL) {
-                $d = $this->user->editUser($username, $ngaysinh_input, "ngaysinh");
-            }
-            if ($about_me_input != NULL) {
-                $e = $this->user->editUser($username, $about_me_input, "about_me");
-            }
+            $_SESSION["hoten"] = $hoten_input;
+            $_SESSION["ngaysinh"] = $ngaysinh_input;
+            $_SESSION["email"] = $email_input;
+            $_SESSION["sdt"] = $sdt_input;
+            $_SESSION["about_me"] = $about_me_input;
+
+
+            $a = $this->user->editUser($username, $hoten_input, $email_input, $sdt_input, $ngaysinh_input, $about_me_input);
+
+            // if ($hoten_input != NULL) {
+            //     $a = $this->user->editUser($username, $hoten_input, "hoten");
+            // }
+            // if ($email_input != NULL) {
+            //     $b = $this->user->editUser($username, $email_input, "email");
+            // }
+            // if ($sdt_input != NULL) {
+            //     $c = $this->user->editUser($username, $sdt_input, "sdt");
+            // }
+            // if ($ngaysinh_input != NULL) {
+            //     $d = $this->user->editUser($username, $ngaysinh_input, "ngaysinh");
+            // }
+            // if ($about_me_input != NULL) {
+            //     $e = $this->user->editUser($username, $about_me_input, "about_me");
+            // }
         }
 
         $user_data = $this->user->getUser($username);

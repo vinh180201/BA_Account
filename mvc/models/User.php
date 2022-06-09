@@ -5,8 +5,9 @@ class User extends DB{
         $user = "SELECT * FROM user_profile WHERE username = '$username';";
         return mysqli_query($this->con, $user);
     }
-    public function editUser($username, $data, $row) {
-        $user = "UPDATE user_profile SET $row = '$data' WHERE username = '$username';";
+    public function editUser($username, $hoten, $email, $sdt, $ngaysinh, $about_me) {
+        $user = "UPDATE user_profile SET hoten = '$hoten', email = '$email', sdt = '$sdt', 
+        ngaysinh = '$ngaysinh', about_me = '$about_me'  WHERE username = '$username';";
         return mysqli_query($this->con, $user);
     }
     public function addUser($username, $hoten, $email, $sdt, $ngaysinh) {
