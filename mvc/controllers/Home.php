@@ -8,6 +8,28 @@ class Home extends Controller{
         $this->user = self::model("User");
         $this->account = self::model("Account");
     }
+    // validate function
+    protected function validateName($string) {
+        if (!preg_match("/^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀ
+        ỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/i",$string)) {
+            return false;
+        }
+        return true;
+    }
+
+    protected function validateEmail($string) {
+        if (!filter_var($string, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+        return true;
+    }
+    protected function validatePhone($string) {
+        if (!preg_match ("/^[0-9]*$/", $string) ){  
+            return false;        
+        }
+        return true;
+    }
+    
 
     public function auto() {
         // quay lai home bang cach luu bien vao session
@@ -99,6 +121,25 @@ class Home extends Controller{
             $sdt_input = $_POST["sdt"];
             $ngaysinh_input = $_POST["ngaysinh"];
             $about_me_input = $_POST["about_me"];
+
+            if (!$this->validateName($hoten_input)) {
+                self::view("edit", [
+                    "msg" => "Invalid name."
+                ]);
+                exit();
+            }
+            if (!$this->validateEmail($email_input)) {
+                self::view("edit", [
+                    "msg" => "Invalid email."
+                ]);
+                exit();
+            }
+            if (!$this->validatePhone($sdt_input)) {
+                self::view("edit", [
+                    "msg" => "Invalid phone number."
+                ]);
+                exit();
+            }
 
             $_SESSION["hoten"] = $hoten_input;
             $_SESSION["ngaysinh"] = $ngaysinh_input;

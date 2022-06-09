@@ -8,6 +8,28 @@ class Login extends Controller{
         $this->user = self::model("User");
     }
 
+    // validate function
+    protected function validateName($string) {
+        if (!preg_match("/^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀ
+        ỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/i",$string)) {
+            return false;
+        }
+        return true;
+    }
+
+    protected function validateEmail($string) {
+        if (!filter_var($string, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+        return true;
+    }
+    protected function validatePhone($string) {
+        if (!preg_match ("/^[0-9]*$/", $string) ){  
+            return false;        
+        }
+        return true;
+    }
+
     public function auto(){
         self::view("login", []);
     }
@@ -19,6 +41,25 @@ class Login extends Controller{
             $email_input = $_POST["email"];
             $sdt_input = $_POST["sdt"];
             $ngaysinh_input = $_POST["ngaysinh"];
+
+            if (!$this->validateName($hoten_input)) {
+                self::view("signup", [
+                    "msg" => "Invalid name."
+                ]);
+                exit();
+            }
+            if (!$this->validateEmail($email_input)) {
+                self::view("signup", [
+                    "msg" => "Invalid email."
+                ]);
+                exit();
+            }
+            if (!$this->validatePhone($sdt_input)) {
+                self::view("signup", [
+                    "msg" => "Invalid phone number."
+                ]);
+                exit();
+            }
             
             $account_data = $this->account->getAccount($username_input);
             // check username

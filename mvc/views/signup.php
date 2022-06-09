@@ -15,6 +15,9 @@
 	body{
   		background-color: skyblue;
   	}
+	#msg {
+		background-color: yellow;
+	}
   	</style>
 	<base href="http://localhost/BA_account/">
 </head>
@@ -30,7 +33,7 @@
 			<h4>Sign Up</h4>
 			<?php 
 				if (isset($data["msg"])) {
-					echo $data["msg"]; 
+					echo "<h5 id='msg'>" . $data["msg"] . "</h5>"; 
 				}
 			?>		
 		<form method="POST" action="Login/Signup">

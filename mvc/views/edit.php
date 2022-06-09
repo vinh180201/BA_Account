@@ -23,6 +23,9 @@
         textarea {
             resize: none;
         }
+        #msg {
+          background-color: yellow;
+        }
     </style>    
 </head>
 <body>
@@ -44,6 +47,11 @@
       
       <!-- edit form column -->
       <div class="col-md-9 personal-info">
+      <?php 
+				if (isset($data["msg"])) {
+					echo "<h5 id='msg'>" . $data["msg"] . "</h5>"; 
+				}
+			?>
         <h3>Profile</h3>
         <form class="form-horizontal" role="form" method="POST" action="submit_edit">
           <div class="form-group">
