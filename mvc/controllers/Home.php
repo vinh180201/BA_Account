@@ -33,6 +33,7 @@ class Home extends Controller{
 
     public function auto() {
         // quay lai home bang cach luu bien vao session
+        $_SESSION["navbar"] = "home";
         self::view("home", [
             "username" => $_SESSION["username"],
             "hoten" => $_SESSION["hoten"],
@@ -88,6 +89,7 @@ class Home extends Controller{
                     $_SESSION["sdt"] = $sdt;
                     $_SESSION["about_me"] = $about_me;
                     $_SESSION["result"] = true;
+                    $_SESSION["navbar"] = "home";
 
                     self::view("home", [
                         "username" => $username,
@@ -123,18 +125,21 @@ class Home extends Controller{
             $about_me_input = $_POST["about_me"];
 
             if (!$this->validateName($hoten_input)) {
+                $_SESSION["navbar"] = "edit";
                 self::view("edit", [
                     "msg" => "Invalid name."
                 ]);
                 exit();
             }
             if (!$this->validateEmail($email_input)) {
+                $_SESSION["navbar"] = "edit";
                 self::view("edit", [
                     "msg" => "Invalid email."
                 ]);
                 exit();
             }
             if (!$this->validatePhone($sdt_input)) {
+                $_SESSION["navbar"] = "edit";
                 self::view("edit", [
                     "msg" => "Invalid phone number."
                 ]);
@@ -149,22 +154,6 @@ class Home extends Controller{
 
 
             $a = $this->user->editUser($username, $hoten_input, $email_input, $sdt_input, $ngaysinh_input, $about_me_input);
-
-            // if ($hoten_input != NULL) {
-            //     $a = $this->user->editUser($username, $hoten_input, "hoten");
-            // }
-            // if ($email_input != NULL) {
-            //     $b = $this->user->editUser($username, $email_input, "email");
-            // }
-            // if ($sdt_input != NULL) {
-            //     $c = $this->user->editUser($username, $sdt_input, "sdt");
-            // }
-            // if ($ngaysinh_input != NULL) {
-            //     $d = $this->user->editUser($username, $ngaysinh_input, "ngaysinh");
-            // }
-            // if ($about_me_input != NULL) {
-            //     $e = $this->user->editUser($username, $about_me_input, "about_me");
-            // }
         }
 
         $user_data = $this->user->getUser($username);
@@ -176,6 +165,8 @@ class Home extends Controller{
             $sdt = $ud["sdt"];
             $about_me = $ud["about_me"];
         }
+
+        $_SESSION["navbar"] = "home";
         self::view("home", [
             "username" => $username,
             "hoten" => $hoten,
@@ -187,6 +178,7 @@ class Home extends Controller{
     }
 
     public function edit() {
+        $_SESSION["navbar"] = "edit";
         self::view("edit", [
 
         ]);
